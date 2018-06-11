@@ -1,0 +1,40 @@
+#shipment-list-container .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0px; }
+  
+  #shipment-list-container .table > thead > tr > th,
+  #shipment-list-container .table > thead > tr > td,
+  #shipment-list-container .table > tbody > tr > th,
+  #shipment-list-container .table > tbody > tr > td,
+  #shipment-list-container .table > tfoot > tr > th,
+  #shipment-list-container .table > tfoot > tr > td {
+    border: 0;
+    padding: 18px;
+    font-size: 14px;
+    font-weight: 200;
+    vertical-align: top;
+    line-height: 1.428571429; }
+  
+  #shipment-list-container .table > thead > tr > th {
+    font-size: 14px;
+    font-weight: 400;
+    vertical-align: bottom;
+    border: 0; 
+    background-color: #F2F2F2;
+  }
+
+
+.blink{
+  /* background-color: rgb(160, 160, 160); */
+  padding: 2px;	
+}
+.blink span{
+  color: #00BA56;
+  animation: blink 5s linear infinite;
+}
+@keyframes blink{
+0%{opacity: 0.2;}
+50%{opacity: .5;}
+100%{opacity: 1;}
+}

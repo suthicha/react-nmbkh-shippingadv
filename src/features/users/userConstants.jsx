@@ -1,0 +1,5 @@
+export const FETCH_USER_PROFILE = 'FETCH_USER_PROFILE';
+export const FETCH_USERS = 'FETCH_USERS';
+export const INSERT_USER = 'INSERT_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const DELETE_USER = 'DELETE_USER';
