@@ -4,7 +4,7 @@ import * as Cookies from 'js-cookie';
 
 export const fetchShipment = () => {
     return delay().then(() => {
-        const cookie = Cookies.getJSON('USER-SESSION');        
+        const cookie = Cookies.getJSON('USER-SESSION');
         const email = Cookies.get('USER_DATA');
         return new Promise((resolve, reject) => {
             axios.get(`/shipment/select/${email}?token=${cookie.token}`)
@@ -38,16 +38,21 @@ export const insertShipment = (data) => {
     return delay().then(() => {
         const cookie = Cookies.getJSON('USER-SESSION');
         const email = Cookies.get('USER_DATA');
-        const shipmentData = {...data, UpdateBy: email};
-        return new Promise((resolve, reject)=>{
+
+        const shipmentData = { ...data,
+            UpdateBy: email
+        };
+        return new Promise((resolve, reject) => {
+           
             axios.put(`/shipment?token=${cookie.token}`, shipmentData)
                 .then(response => {
                     resolve(response.data)
                 })
                 .catch(error => {
-                    reject(error)
+                    // reject(error)
                 })
         })
+
     })
 }
 
@@ -55,23 +60,25 @@ export const updateShipment = (data) => {
     return delay().then(() => {
         const cookie = Cookies.getJSON('USER-SESSION');
         const email = Cookies.get('USER_DATA');
-        const shipmentData = {...data, UpdateBy: email};
+        const shipmentData = { ...data,
+            UpdateBy: email
+        };
         return new Promise((resolve, reject) => {
             axios.patch(`/shipment/${shipmentData.TrxNo}?token=${cookie.token}`, shipmentData)
-            .then(response => {
-                resolve(response.data)
-            })
-            .catch(error => {
-                reject(error)
-            })
-        
+                .then(response => {
+                    resolve(response.data)
+                })
+                .catch(error => {
+                    reject(error)
+                })
+
         })
     })
 }
 
 export const findShipment = (id) => {
     return delay().then(() => {
-        const cookie = Cookies.getJSON('USER-SESSION');        
+        const cookie = Cookies.getJSON('USER-SESSION');
         return new Promise((resolve, reject) => {
             axios.get(`/shipment/${id}?token=${cookie.token}`)
                 .then(response => {
@@ -86,7 +93,7 @@ export const findShipment = (id) => {
 
 export const findInvoice = (invno) => {
     return delay().then(() => {
-        const cookie = Cookies.getJSON('USER-SESSION');        
+        const cookie = Cookies.getJSON('USER-SESSION');
         return new Promise((resolve, reject) => {
             axios.get(`/shipment/invoice/${invno}?token=${cookie.token}`)
                 .then(response => {
@@ -96,12 +103,27 @@ export const findInvoice = (invno) => {
                     reject(error);
                 })
         })
-    })    
+    })
+}
+
+export const findCustomerInvoice = (invno) => {
+    return delay().then(() => {
+        const cookie = Cookies.getJSON('USER-SESSION');
+        return new Promise((resolve, reject) => {
+            axios.get(`/customerinvoice/${invno}?token=${cookie.token}`)
+                .then(response => {
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    reject(error);
+                })
+        })
+    })
 }
 
 export const fetchCommercialInvoice = (invno) => {
     return delay().then(() => {
-        const cookie = Cookies.getJSON('USER-SESSION');        
+        const cookie = Cookies.getJSON('USER-SESSION');
         return new Promise((resolve, reject) => {
             axios.get(`/shipment/transaction/query/${invno}?token=${cookie.token}`)
                 .then(response => {
@@ -111,13 +133,13 @@ export const fetchCommercialInvoice = (invno) => {
                     reject(error);
                 })
         })
-    })    
+    })
 }
 
 export const deleteShipment = (id) => {
     return delay().then(() => {
-        const cookie = Cookies.getJSON('USER-SESSION');        
-        const email = Cookies.get('USER_DATA');    
+        const cookie = Cookies.getJSON('USER-SESSION');
+        const email = Cookies.get('USER_DATA');
         return new Promise((resolve, reject) => {
             axios.delete(`/shipment/${id}/${email}?token=${cookie.token}`)
                 .then(response => {

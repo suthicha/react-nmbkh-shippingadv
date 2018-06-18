@@ -9,8 +9,8 @@ import withAuth from "../../../app/common/hoc/withAuth";
 
 const optTradCode = [
   { key: "", value: "", text: "Select Transaction Type"},
-  { key: "A", value: "A", text: "Air Export" },
-  { key: "O", value: "O", text: "Ocean Export" }
+  { key: "a", value: "a", text: "Air Export" },
+  { key: "s", value: "s", text: "Ocean Export" }
 ];
 
 const mapState = (state, ownProps) => {
@@ -93,7 +93,7 @@ class ShipmentDashboard extends Component {
                   as={Link}
                   positive
                   disabled={this.state.tradCode === ''? true: false}
-                  to={`/create-shipment/${this.state.tradCode}`}
+                  to={`/create-shipment/${this.state.tradCode}/new`}
                   content="CREATE NEW"
                 />
               </Form.Group>

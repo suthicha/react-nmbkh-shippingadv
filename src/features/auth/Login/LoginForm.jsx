@@ -10,9 +10,12 @@ import {
 import TextInput from "../../../app/common/form/TextInput";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 
-const mapState = state => ({
-  loading: state.async.loading
-});
+
+const mapState = (state) => {
+  return {
+    loading: state.async.loading
+  }
+}
 
 const mapActions = {
   login
@@ -25,6 +28,7 @@ const validate = combineValidators({
 
 const LoginForm = ({ login, handleSubmit, loading }) => {
   if (loading) return <LoadingComponent content="Please wait ..." />;
+  
   return (
     <Form error size="large" onSubmit={handleSubmit(login)}>
       <Segment>

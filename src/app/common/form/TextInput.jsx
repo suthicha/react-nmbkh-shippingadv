@@ -10,15 +10,21 @@ const TextInput = ({
   refName,
   cssName,
   disabled,
+  handleOnBlur,
   meta: { touched, error }
 }) => {
   return (
     <Form.Field error={touched && !!error} width={width} className={cssName} disabled={disabled}>
       <label>{placeholder}</label>
-      <input {...input} placeholder={placeholder} type={type} style={style} ref={refName} />
+      <input 
+        {...input} 
+        placeholder={placeholder} 
+        type={type} 
+        style={style} 
+        ref={refName} />
       {touched &&
         error && (
-          <Label basic color="red">
+          <Label as='a' color='red' basic pointing>
             {error}
           </Label>
         )}

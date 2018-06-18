@@ -23,9 +23,9 @@ const DateInput = ({
       />
       {touched &&
         error && (
-          <Label basic color="red">
+          <Label as='a' color='red' basic pointing>
             {error}
-          </Label>
+          </Label>  
         )}
     </Form.Field>
   );

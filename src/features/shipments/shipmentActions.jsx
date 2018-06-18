@@ -16,6 +16,7 @@ import {
   deleteShipment,
   updateShipment,
   findInvoice,
+  findCustomerInvoice,
   findShipment,
   fetchHistory,
   fetchShipment,
@@ -37,8 +38,8 @@ export const createShipmentAction = data => {
     payload: {
       shipment: data
     }
-  }
-}
+  };
+};
 
 export const updateShipmentAction = data => {
   return {
@@ -46,8 +47,8 @@ export const updateShipmentAction = data => {
     payload: {
       shipment: data
     }
-  }
-}
+  };
+};
 
 export const deleteShipmentAction = id => {
   return {
@@ -55,10 +56,10 @@ export const deleteShipmentAction = id => {
     payload: {
       id
     }
-  }
-}
+  };
+};
 
-export const load_shipments = (callback) => {
+export const load_shipments = callback => {
   return async dispatch => {
     try {
       dispatch(asyncActionStart());
@@ -90,7 +91,6 @@ export const find_shipment = (id, callback) => {
   };
 };
 
-
 export const find_invoice = (invno, callback) => {
   return async dispatch => {
     try {
@@ -105,7 +105,20 @@ export const find_invoice = (invno, callback) => {
   };
 };
 
-export const fetch_commercialInvoice = (invno) => {
+export const find_customer_invoice = (invno, callback) => {
+  return async dispatch => {
+    try {
+      let promise = await findCustomerInvoice(invno);
+      callback(promise.data[0]);
+    } catch (e) {
+      callback(null);
+      toastr.error("Oops", "Found error something went wrong");
+      dispatch(asyncActionError());
+    }
+  };
+};
+
+export const fetch_commercialInvoice = invno => {
   return async dispatch => {
     try {
       dispatch(asyncActionStart());
@@ -121,18 +134,18 @@ export const fetch_commercialInvoice = (invno) => {
   };
 };
 
-export const reset_shipments = (shipments) => {
+export const reset_shipments = shipments => {
   return dispatch => {
-    localStorage.setItem('shipments', JSON.stringify(shipments));
+    localStorage.setItem("shipments", JSON.stringify(shipments));
     dispatch(fetchShipmentAction([]));
-  }
-}
+  };
+};
 
 export const load_history = (invno, callback) => {
   return async dispatch => {
     try {
       let promise = await fetchHistory(invno);
-      if (promise){
+      if (promise) {
         callback(promise.data);
       }
       // toastr.success("Success!", "Shipment have been loaded.");
@@ -144,63 +157,85 @@ export const load_history = (invno, callback) => {
   };
 };
 
-export const filter_shipment = (invno) => {
+export const filter_shipment = invno => {
   return dispatch => {
-    dispatch({type: FILTER_SHIPMENT, payload: invno})
-  }
-}
+    dispatch({ type: FILTER_SHIPMENT, payload: invno });
+  };
+};
 
-export const create_shipment = (shipment, callback) => {
+export const create_shipment = (shipments, callback) => {
+  let successItems = [];
+
   return async dispatch => {
     try {
-      dispatch(asyncActionStart());
-      const promise = await insertShipment(shipment);
-      if (promise){
-        dispatch(createShipmentAction(promise.data[0]));
-        toastr.success("Success!", "Shipment have been added.")
-        callback({statusCode:201,statusText:'success'});
-        dispatch(asyncActionFinish());
+      
+      for (let shp of shipments) {
+        
+        try{
+          const promise = await insertShipment(shp);
+          dispatch(createShipmentAction(promise.data[0]));
+          successItems=[...successItems, 
+            Object.assign({},
+            {key: shp.InvNo,
+            data: promise.data[0],
+            statusCode: 201
+            })]
+        }catch(e){
+          successItems=[...successItems, Object.assign({},{
+            key: shp.InvNo,
+            data: shp,
+            statusCode: 501
+          })]
+        }
+        
       }
-    }catch(e){
+
+      callback({ 
+        statusCode: 201, 
+        statusText: "success", 
+        successItems 
+      });
+      
+    } catch (e) {
       dispatch(asyncActionError());
-      toastr.error("Oops", "Something went wrong cound not add the shipment.")
-      callback({statusCode:500, statusText: e.message});
+      toastr.error("Oops", "Something went wrong cound not add the shipment.");
+      callback({ statusCode: 500, statusText: e.message, successItems });
     }
-  }
-}
+  };
+};
 
 export const update_shipment = (shipment, callback) => {
   return async dispatch => {
     try {
       const promise = await updateShipment(shipment);
-      if (promise){
+      if (promise) {
         dispatch(updateShipmentAction(promise.data[0]));
-        toastr.success("Success!", "Shipment have been updated.")
-        callback({statusCode:201,statusText:'success'});
+        toastr.success("Success!", "Shipment have been updated.");
+        callback({ statusCode: 201, statusText: "success" });
       }
-    }catch(e){
+    } catch (e) {
       dispatch(asyncActionError());
-      toastr.error("Oops", "Something went wrong cound not add the shipment.")
-      callback({statusCode:500, statusText: e.message});
+      toastr.error("Oops", "Something went wrong cound not add the shipment.");
+      callback({ statusCode: 500, statusText: e.message });
     }
-  }
-}
+  };
+};
 
 export const delete_shipment = (id, callback) => {
   return async dispatch => {
     try {
       dispatch(asyncActionStart());
       const promise = await deleteShipment(id);
-      if (promise){
+      if (promise) {
         dispatch(deleteShipmentAction(id));
         dispatch(asyncActionFinish());
-        toastr.warning("Deleted!", "Shipment have been deleted.")
-        callback({statusCode:200,statusText:'success'});
+        toastr.warning("Deleted!", "Shipment have been deleted.");
+        callback({ statusCode: 200, statusText: "success" });
       }
-    }catch(e){
+    } catch (e) {
       dispatch(asyncActionError());
-      toastr.error("Oops", "Something went wrong cound not add the shipment.")
-      callback({statusCode:500, statusText: e.message});
+      toastr.error("Oops", "Something went wrong cound not add the shipment.");
+      callback({ statusCode: 500, statusText: e.message });
     }
-  }
-}
+  };
+};

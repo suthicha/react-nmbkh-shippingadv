@@ -7,19 +7,20 @@ class ShipmentList extends Component {
   render() {
     const { shipments } = this.props;
     return (
-      <div id="shipment-list-container">
-        <Table basic='very' celled collapsing striped>
+      <div>
+        <Table id='shipment-list-container' compact celled definition size='small'>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Commercial Invoice</Table.HeaderCell>
-              <Table.HeaderCell>TRDCD</Table.HeaderCell>
-              <Table.HeaderCell>MAWB</Table.HeaderCell>
+              <Table.HeaderCell />
+              <Table.HeaderCell>INVNO.</Table.HeaderCell>
+              <Table.HeaderCell textAlign='center'>SHP.</Table.HeaderCell>
               <Table.HeaderCell>HAWB</Table.HeaderCell>
-              <Table.HeaderCell>First FlightNo.</Table.HeaderCell>
-              <Table.HeaderCell>Resend</Table.HeaderCell>                            
-              <Table.HeaderCell>LastUpdate</Table.HeaderCell>
-              <Table.HeaderCell>Send date</Table.HeaderCell>
-              <Table.HeaderCell>Send status</Table.HeaderCell>              
+              <Table.HeaderCell>FLNO.</Table.HeaderCell>
+              <Table.HeaderCell>VOY.</Table.HeaderCell>
+              <Table.HeaderCell textAlign='center'>RSND.</Table.HeaderCell>                            
+              <Table.HeaderCell>SEND</Table.HeaderCell>
+              <Table.HeaderCell>UPDATE</Table.HeaderCell>
+              <Table.HeaderCell textAlign='center'>STATUS</Table.HeaderCell> 
             </Table.Row>
           </Table.Header>
           <Table.Body>

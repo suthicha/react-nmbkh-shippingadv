@@ -7,8 +7,7 @@ import {
   Button,
   Grid,
   Header,
-  Icon,
-  Checkbox
+  Icon
 } from "semantic-ui-react";
 import TextInput from "../../../app/common/form/TextInput";
 import DateInput from "../../../app/common/form/DateInput";
@@ -27,7 +26,8 @@ import {
   update_shipment,
   delete_shipment,
   find_invoice,
-  find_shipment
+  find_shipment,
+  find_customer_invoice
 } from "../shipmentActions";
 import withAuth from "../../../app/common/hoc/withAuth";
 import { toastr } from "react-redux-toastr";
@@ -74,7 +74,8 @@ const mapActions = {
   update_shipment,
   delete_shipment,
   find_shipment,
-  find_invoice
+  find_invoice,
+  find_customer_invoice
 };
 
 const validate = combineValidators({
@@ -241,6 +242,28 @@ class ShipmentForm extends Component {
     }
   };
 
+  handleOnBlur = (evt) => {
+    const { value } = evt.target;
+    const { change } = this.props;
+    this.props.find_customer_invoice(value, (data) => {
+      
+      if (data){
+        const { COMCD, IHCORP, IHDEST, IHINVYMD} = data;
+        change('CompCd', COMCD);
+        change('Location', IHCORP);
+        change('Port', IHDEST);
+        change('InvDt', IHINVYMD);
+      }else {
+        const fields = ['CompCd','Location','Port'];
+        for(var i = 0; i < fields.length; i++){
+          change(fields[i],'');
+        }
+        change('InvDt', Date.now());
+        toastr.warning('Opps!', 'Find not found ' + this.InvNo.value + ' on data transfer system.');
+      }
+    })
+  }
+
   render() {
     const { invalid, submitting, pristine, isUpdate, formValues, initialValues, tradcode } = this.props;
     const InvNo = formValues && formValues.InvNo;
@@ -357,11 +380,13 @@ class ShipmentForm extends Component {
                 <Field
                   name="InvNo"
                   type="text"
+                  disabled={isUpdate}
                   component={TextInput}
                   placeholder="Invoice No."
                   style={fieldStyle}
                   cssName={this.state.duplicate ? "duplicate" : ""}
                   refName={ref => (this.InvNo = ref)}
+                  handleOnBlur={this.handleOnBlur}
                 />
                 <Field
                   name="InvDt"

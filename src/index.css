@@ -133,3 +133,7 @@ select:-webkit-autofill:focus {
   text-transform: uppercase
 }
 
+/* .ui.basic.label {
+  border: none !important;
+} */
+

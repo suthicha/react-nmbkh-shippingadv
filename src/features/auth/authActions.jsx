@@ -49,6 +49,7 @@ export const logout = callback => {
 };
 
 export const checkAuth = (history, callback) => {
+  
   setTimeout(() => {
     const cookie = Cookies.getJSON("USER-SESSION");
     if (cookie) {

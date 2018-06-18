@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from "react-router-dom";
 import ShipmentDashboard from "../../features/shipments/ShipmentDashboard/ShipmentDashboard";
 import NavBar from "../../features/nav/NavBar/NavBar";
-import ShipmentForm from "../../features/shipments/ShipmentForm/ShipmentForm";
+import ShipmentForm from "../../features/shipments/ShippingAdvForm/ShippingAdvForm";
 import HomePage from "../../features/home/HomePage";
 import ModalManager from '../../features/modals/ModalManager';
 import ShipmentSearchPage from '../../features/shipments/ShipmentSearch/ShipmentSearchPage';
@@ -31,8 +31,8 @@ class App extends React.Component {
                 <Switch>
                   <Route path="/shipments" component={ShipmentDashboard} />
                   <Route path="/query-shipments/:searchText" component={ShipmentSearchPage} />                  
-                  <Route path="/create-shipment/:tradcode/:id" component={ShipmentForm} />
-                  <Route path="/create-shipment/:tradcode" component={ShipmentForm} />
+                  <Route path="/create-shipment/:shipmenttype/:commandtype/:id" component={ShipmentForm} />
+                  <Route path="/create-shipment/:shipmenttype/:commandtype" component={ShipmentForm} />
                   <Route path="/user-profile" component={UserProfileDashboard} />
                 </Switch>
               </Container>

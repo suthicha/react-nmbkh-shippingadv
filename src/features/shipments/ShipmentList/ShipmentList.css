@@ -1,4 +1,4 @@
-#shipment-list-container .table {
+/* #shipment-list-container .table {
     width: 100%;
     max-width: 100%;
     margin-bottom: 0px; }
@@ -10,31 +10,39 @@
   #shipment-list-container .table > tfoot > tr > th,
   #shipment-list-container .table > tfoot > tr > td {
     border: 0;
-    padding: 18px;
-    font-size: 14px;
+    padding: 10px;
+    font-size: 11.75px;
     font-weight: 200;
     vertical-align: top;
-    line-height: 1.428571429; }
+    line-height: 1.428571429; } */
   
   #shipment-list-container .table > thead > tr > th {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 12px;
+    font-weight: 600;
     vertical-align: bottom;
     border: 0; 
     background-color: #F2F2F2;
   }
 
 
-.blink{
+.slink .blink{
   /* background-color: rgb(160, 160, 160); */
   padding: 2px;	
 }
-.blink span{
-  color: #00BA56;
-  animation: blink 5s linear infinite;
+
+.slink span{
+  color: green;
+}
+
+.blink span{ 
+  color: #FFAB0D;
+  animation: blink 2s linear infinite;
 }
 @keyframes blink{
-0%{opacity: 0.2;}
-50%{opacity: .5;}
+0%{opacity: 0.5;}
 100%{opacity: 1;}
+}
+
+.ui.compact.table td {
+  padding: .5em .5em !important;
 }
